@@ -13,7 +13,7 @@ class MenuList(object):
         elif obj not in self.children:
             self.children.append(obj)
 
-    def is_valid(self):
+    def is_invalid(self):
         return self.root_id in self.children
 
     def is_in_children(self, id):

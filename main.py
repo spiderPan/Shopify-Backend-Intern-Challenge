@@ -19,7 +19,8 @@ def validateMenu(menus, menuList=[]):
         root_id = id if parentID == 0 else parentID
         m = MenuList(root_id)
         m.add_child(childrenIDs)
-        mergeable_list = [menuitem for menuitem in menuList if menuitem.is_mergeable(m)]
+        mergeable_list = [
+            menuitem for menuitem in menuList if menuitem.is_mergeable(m)]
         if len(mergeable_list) == 0:
             menuList.append(m)
         else:
@@ -47,9 +48,17 @@ def findInvalidateMenus(url, param={}, invalidateMenu=[]):
 
 
 def main():
-    invalidatedMenu = []
-    data = findInvalidateMenus(DATAURL, {}, invalidatedMenu)
+    result = {
+        'valid_menus': [],
+        'invalid_menus': []
+    }
+    data = findInvalidateMenus(DATAURL, {})
     for item in data:
-        print item.get_format()
+        itemStr = item.get_format()
+        if item.is_invalid():
+            result['invalid_menus'].append(itemStr)
+        else:
+            result['valid_menus'].append(itemStr)
+    print result
 
 main()
